@@ -1,0 +1,48 @@
+<%- include('../partials/header.ejs') %>
+
+<body>
+
+    <div class="container">
+
+        <%- include('../partials/menu.ejs') %>
+
+        <div class="card mt-3">
+
+            <div class="card-header">
+                <h3>CADASTRO DE PERFUMES</h3>
+            </div>
+
+            <div class="card-body">
+
+                <form action="http://localhost:3000/cadastrarPerfume" method="post">
+
+                    <label for="nome_perfume"></label>
+                    <input class="form-control" type="text" 
+                    name="nome_perfume" id="nome_perfume"
+                    placeholder="NOME DO PERFUME">
+
+                    <label for="marca_perfume"></label>
+                    <input class="form-control" type="text" 
+                    name="marca_perfume" id="marca_perfume"
+                    placeholder="MARCA DO PERFUME">
+
+                    <label for="preco_perfume"></label>
+                    <input class="form-control" type="number" 
+                    name="preco_perfume" id="preco_perfume"
+                    placeholder="PREÇO DO PERFUME">
+
+                    <button class="btn btn-success mt-3">CADASTRAR</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+<%- include('../partials/footer.ejs') %>
+
+</html>
