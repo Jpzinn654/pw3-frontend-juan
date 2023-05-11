@@ -6,75 +6,103 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-//config ejs
+/* INICIO DAS CONFIGURAÇÕES DO EJS:  */
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+/* FIM DAS CONFIGURAÇÕES DO EJS:  */
 
-//rota de acesso ao início da página
+/* INICIO DAS ROTAS DE ACESSO AS PÁGINAS EJS*/
 app.get('/', (req, res)=>{
     res.render('index');
 });
+/* FIM DAS ROTAS DE ACESSO AS PÁGINAS EJS*/
 
-app.get('/perfumes', (req, res)=>{
-    res.render('perfumes/index');
+/* INICIO DAS ROTAS DE CATEGORIA */
+
+/*CADASTRO*/
+app.get('/categoria', (req, res)=>{
+    res.render('categoria/index');
 });
 
-//rota axios para conexão com a api
-app.get('/listarPerfume', (req, res)=>{
+/*LISTAGEM*/
+app.get('/listagemCategorias', (req, res)=>{
    
-    const urlListarPerfume = 'http://localhost:3000/listarPerfume';
+    /* CONFIGURAÇÃO DA REQUISIÇÃO BACK END VIA AXIOS*/
 
-    axios.get(urlListarPerfume)
+    /* ROTA DO BACK END */
+    const urlListarCategoria = 'http://localhost:3000/listarCategoria';
+
+    /*
+     CHAMADA DO AXIOS PARA A ROTA DO BACK END 
+     PARAMETROS DO VERBO:
+     1 - ROTA
+     2 - .then DE TRATAMENTO DA RESPOSTA
+     */
+    axios.get(urlListarCategoria)
     .then((response)=>{
 
         console.log(response.data);
-        let perfumes = response.data;
-        res.render('perfumeS/listarPerfume', {perfumes});
+        let categorias = response.data;
+        res.render('categoria/listagemCategoria', {categorias});
 
     });
 });
 
-app.get('/editarPerfume/:cod_perfume', (req, res)=>{
+/*EDITAR*/
+app.get('/editarCategoria/:cod_categoria', (req, res)=>{
 
-    let {cod_perfume} = req.params
-    
-    urlListarPerfumePK = `http://localhost:3000/listarPerfumePK/${cod_perfume}`
+    let {cod_categoria} = req.params;
 
-    axios.get(urlListarPerfumePK)
-    .then((response)=>{
+    urlListarCategoriaPK = `http://localhost:3000/listarCategoriaPK/${cod_categoria}`;
 
-        // console.log(response.data);
+    // console.log("COD_CATEGORIA: " + cod_categoria); 
 
-        let perfume = response.data;
-        res.render('perfumes/editarPerfume', {perfume});
-    })
-    
-})
+    axios.get(urlListarCategoriaPK)
+        .then((response)=>{
+            let categoria = response.data;
+            //console.log(categoria.data);
+            res.render('categoria/editarCategoria.ejs', {categoria});
 
-app.post('/editarPerfume', (req, res)=>{
+        });
 
-    let urlEditar = 'http://localhost:3000/alterarPerfume'
+});
+
+app.post('/editarCategoria', (req, res)=>{
+
+    // console.log(req.body);
+    // res.send('DADO ALTERADO');
+
+    let urlEditar = 'http://localhost:3000/alterarCategoria';
 
     axios.put(urlEditar, req.body)
+        .then((response)=>{
+            res.redirect('/listagemCategorias');
+        });
+
+});
+
+app.get('/excluirCategoria/:cod_categoria', (req, res)=>{
+   console.log(req.params);
+
+    let {cod_categoria} = req.params;
+
+    const urlExcluirCAtegoria = `http://localhost:3000/excluirCategoria/${cod_categoria}`;
+
+    axios.delete(urlExcluirCAtegoria)
     .then((response)=>{
-        res.redirect('/listarPerfume')
-    })
+        res.redirect('/listagemCategorias');
+    });
+    
 });
 
 
-app.get('/deletarPerfume/:cod_perfume', (req, res)=>{
-    console.log(req.params);
- 
-     let {cod_perfume} = req.params;
- 
-     const urlExcluirPerfume = `http://localhost:3000/deletarPerfume/${cod_perfume}`;
- 
-     axios.delete(urlExcluirPerfume)
-     .then((response)=>{
-         res.redirect('/listarPerfume');
-     });
-     
- });
+/* FIM DAS ROTAS DE CATEGORIA */
+
+/*INICIO DAS ROTAS DE LIVROS*/
+
+app.get('/livro', (req, res)=>{
+    res.render('livro/index')
+})
 
 app.listen(3001, ()=>{
     console.log("SERVIDOR FRONTEND RODANDO EM - http://localhost:3001");
