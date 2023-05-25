@@ -113,11 +113,11 @@ app.get('/livro', (req, res) => {
 
 });
 
-/*LISTAGEM DE LIVROS*/ 
+/*LISTAGEM DE LIVROS*/
 
 app.get('/listagemLivro', (req, res) => {
-    const urlListarCLivro = 'http://localhost:3000/listarLivro';
-    axios.get(urlListarCLivro)
+    const urlListarLivro = 'http://localhost:3000/listarLivro';
+    axios.get(urlListarLivro)
         .then((response) => {
             console.log(response.data);
             let livros = response.data;
@@ -126,6 +126,48 @@ app.get('/listagemLivro', (req, res) => {
         });
 });
 
+/* EDITAR LIVRO */
+app.get('/editarLivro/:cod_livro', (req, res) => {
+
+    let { cod_livro } = req.params;
+
+    urlListarLivroPK = `http://localhost:3000/listarLivroCodigo/${cod_livro}`;
+
+    // console.log("COD_CATEGORIA: " + cod_categoria); 
+
+    axios.get(urlListarLivroPK)
+        .then((response) => {
+            let livro = response.data;
+            //console.log(categoria.data);
+
+            const urlListarLivro = 'http://localhost:3000/listarCategoria';
+
+            axios.get(urlListarLivro)
+                .then((response) => {
+                    let categoria = response.data;
+                    res.render('livro/editarLivro.ejs', { livro, categoria });
+                });
+        });
+
+});
+
+
+
+
+
+// app.post('/editarLIvro', (req, res) => {
+
+//     // console.log(req.body);
+//     // res.send('DADO ALTERADO');
+
+//     let urlEditarLivro = 'http://localhost:3000/editarLivro';
+
+//     axios.put(urlEditarLivro, req.body)
+//         .then((response) => {
+//             res.redirect('/listagemCategorias');
+//         });
+
+// });
 
 app.listen(3001, () => {
     console.log("SERVIDOR FRONTEND RODANDO EM - http://localhost:3001");

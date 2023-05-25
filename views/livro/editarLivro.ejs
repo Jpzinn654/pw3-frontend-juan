@@ -1,0 +1,68 @@
+<%- include('../partials/header.ejs') %>
+
+    <body>
+
+        <div class="container">
+
+            <%- include('../partials/menu.ejs') %>
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>EDIÇÃO DE LIVROS</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="http://localhost:3000/cadastrarLivro" method="post" enctype="multipart/form-data">
+
+                            <label for="titulo"></label>
+                            <input class="form-control" type="text" name="titulo" id="titulo"
+                                placeholder="TÍTULO DO LIVRO"
+                                value="<%= livro.titulo %>">
+
+                            <label for="preco"></label>
+                            <input class="form-control" type="text" name="preco" id="preco"
+                                placeholder="PREÇO DO LIVRO"
+                                value="<%= livro.preco %>">
+
+                            <label for="categorias"></label>
+                            
+
+                            <label for="detalhes"></label>
+                            <input class="form-control" type="text" name="detalhes" id="detalhes"
+                                placeholder="DETALHES DO LIVRO"
+                                value="<%= livro.detalhes %>"
+                                >
+
+                                <select class="form-control" name="tblCategoriumCodCategoria" id="tblCategoriumCodCategoria">
+                                    <% categoria.data.forEach((categoria)=> { %>
+                                        <option value="<%= categoria.cod_categoria%>">
+                                            <%= categoria.nome_categoria %>
+                                        </option>
+                                        <% })%>
+                                </select>
+
+                            <label for="imagem"></label>-
+                            <input class="form-control" type="file" name="imagem" id="imagem"
+                            value="">
+
+                            <label for="imagem"></label>
+                            <input class="form-control" type="file" name="imagem" id="imagem"
+                            value="">
+
+                            <button class="btn btn-success mt-2">EDITAR</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+        </div>
+
+    </body>
+
+    <%- include('../partials/footer.ejs') %>
+
+        </html>
