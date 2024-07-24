@@ -43,4 +43,3 @@ Este projeto está licenciado sob a licença MIT.
 
 ## Contatos ou Créditos
 Cristiano Correa (Mentor)
-```
